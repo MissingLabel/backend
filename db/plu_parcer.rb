@@ -1,7 +1,7 @@
 # In this example the model MyFile has_attached_file :attachment
 def parce_plu_excel
   Spreadsheet.client_encoding = 'UTF-8'
-  @workbook = Spreadsheet.open('../fixtures/plu_spreadsheet.xlsx')
+  @workbook = Spreadsheet.open("db/fixtures/plu_spreadsheet.xls")
 
   # Get the first worksheet in the Excel file
   @worksheet = @workbook.worksheet(0)
