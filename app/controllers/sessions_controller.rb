@@ -5,7 +5,7 @@ class SessionsController < ApplicationController
   end
 
   def new
-    @user = User.find(session[:current_user_id])
+    @user = User.find(session[:current_user_id]) if session[:current_user_id]
   end
 
   def create
