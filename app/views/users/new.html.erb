@@ -1,0 +1,52 @@
+
+<div class="login-form">
+
+  <h1>Sign Up Form</h1>
+
+  <%= form_for @user do |f| %>
+
+    <p>
+      <%= f.label :email %><br>
+      <% if @user.errors[:email].any? %>
+      <ul>
+        <% @user.errors[:email].each do |message| %>
+         <li><%= message %></li>
+        <% end %>
+      </ul>
+    <% end %>
+      <%= f.text_field :email %>
+    </p>
+
+    <p>
+      <%= f.label :password %><br>
+      <% if @user.errors[:password].any? %>
+      <ul>
+        <% @user.errors[:password].each do |message| %>
+         <li><%= message %></li>
+        <% end %>
+      </ul>
+    <% end %>
+      <%= f.password_field :password, placeholder: "Must be at least 6 characters" %>
+
+    </p>
+
+    <p>
+      <%= f.label :zip_code %><br>
+      <% if @user.errors[:zip_code].any? %>
+      <ul>
+        <% @user.errors[:zip_code].each do |message| %>
+         <li><%= message %></li>
+        <% end %>
+      </ul>
+    <% end %>
+      <%= f.text_field :zip_code %>
+    </p>
+
+    <p>
+      <%= f.submit "Submit" %>
+    </p>
+
+
+  <% end %>
+
+</div>
