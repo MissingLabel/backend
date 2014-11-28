@@ -5,11 +5,12 @@ Rails.application.routes.draw do
   delete "logout" => "sessions#destroy"
 
   resources :users, only:[:create, :new, :destroy]
+  resources :producebyplu, only:[:index]
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'sessions#new'
+  root 'produce_by_plus#show'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
