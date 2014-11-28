@@ -1,6 +1,6 @@
 require 'net/http'
 #incomplete
-class nutritionApi
+class NutritionApi
 
   def call_usda_api(ndb_no)
     url = URI.parse("http://api.data.gov/usda/ndb/reports/?ndbno=#{ndb_no}&type=f&format=xml&api_key=T7Or56nDBNq3C6VdIJC47Sz1qxprwdyByquFaV4A")
@@ -11,9 +11,8 @@ class nutritionApi
     puts res.body
   end
 
-  def
-    call_usda_api
-  end
-
 end
 # "http://api.data.gov/usda/ndb/reports/?ndbno=09503&type=f&format=xml&api_key=T7Or56nDBNq3C6VdIJC47Sz1qxprwdyByquFaV4A"
+test = NutritionApi.new
+
+test.call_usda_api("09503")
