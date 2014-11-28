@@ -15,9 +15,9 @@ def parce_plu_excel
     @produce = ProduceByPlu.new
     #row[0] is the first cell in the current row, row[1] is the second cell, etc...
     @produce.plu_number = row[0]
-    @produce.commodity = row[1]
-    @produce.variety = row[2]
-    @produce.size = row[3]
+    @produce.commodity = row[1].downcase
+    @produce.variety = row[2].downcase if row[2]
+    @produce.size = row[3].downcase if row[3]
 
     @produce.save
   end
