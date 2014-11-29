@@ -85,3 +85,19 @@ berries.each do |berry|
     end
   end
 end
+
+#ndb seed ---------------------------------------
+
+ProduceByPlu.all.each do |food|
+  new_produce = ProduceNdb.new("http://www.thefruitpages.com/chart#{food.commodity.split(' ')[0]}.shtml")
+
+
+  produce = ProduceByPlu.where(commodity: food.commodity)
+  produce.each do |produce|
+    produce.update_attributes(ndb_no: new_produce.ndb_no)
+  end
+end
+
+#------------------------------------------------
+
+
