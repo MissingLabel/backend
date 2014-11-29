@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   post "login" => "sessions#create"
   delete "logout" => "sessions#destroy"
 
-  get "items/:plu_number" => "items#json_object"
+  get "items/:plu_number" => "items#json_object", :defaults => { :format => :json }
 
   resources :users, only:[:create, :new, :destroy]
   # The priority is based upon order of creation: first created -> highest priority.
