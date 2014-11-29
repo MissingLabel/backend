@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20141127215016) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "produce_by_gs1s", force: true do |t|
     t.integer  "produce_by_plu_id"
     t.string   "location"

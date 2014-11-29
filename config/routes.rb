@@ -4,12 +4,14 @@ Rails.application.routes.draw do
   post "login" => "sessions#create"
   delete "logout" => "sessions#destroy"
 
+  get "items/:plu_number" => "items#json_object" #,:defaults => { :format => :json }
+
   resources :users, only:[:create, :new, :destroy]
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'sessions#new'
+  root 'items#json_object'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
