@@ -31,6 +31,7 @@ gem 'nokogiri'
 gem 'bcrypt', '~> 3.1.7'
 
 gem 'rails_12factor'
+gem 'debugger'
 
 # Use unicorn as the app server
 # gem 'unicorn'

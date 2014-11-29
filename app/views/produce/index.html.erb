@@ -1,0 +1,10 @@
+<% @all_produce.each do |produce| %>
+  <p><strong>Commodity:</strong> <%=produce.commodity%> <strong>Variety:</strong> <%=produce.variety%> <strong>PLU#:</strong> <%=produce.plu_number%></p>
+    <ul>
+      <li>How to select: <%= produce.how_to_select%></li>
+      <li>How to store: <%= produce.how_to_store%></li>
+    </ul>
+  <%end%>
+
+
+<!-- [(produce.commodity.length) -1] -->
