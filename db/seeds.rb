@@ -24,6 +24,7 @@ navalorange = ProduceByPlu.find_by(plu_number: 3107)
 navalorange.ndb_no = "09202"
 navalorange.save
 
+
 # seeds how_to_select and how_to_store for ProduceByPLU objects
 
 commodities = ["guava", "kale", "pomegranate",
@@ -44,3 +45,19 @@ commodities.each do |commodity|
     produce.update_attributes(how_to_select: new_produce.how_to_select, how_to_store: new_produce.how_to_store)
   end
 end
+
+#ndb seed ---------------------------------------
+
+ProduceByPlu.all.each do |food|
+  new_produce = ProduceNdb.new("http://www.thefruitpages.com/chart#{food.commodity.split(' ')[0]}.shtml")
+
+
+  produce = ProduceByPlu.where(commodity: food.commodity)
+  produce.each do |produce|
+    produce.update_attributes(ndb_no: new_produce.ndb_no)
+  end
+end
+
+#------------------------------------------------
+
+
