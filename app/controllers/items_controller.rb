@@ -1,7 +1,8 @@
 class ItemsController < ApplicationController
-  protect_from_forgery :except => :json
   
-  def json
+  protect_from_forgery except: :json_object
+  
+  def json_object
 
     @produce_item = ProduceByPlu.find_by(plu_number: params[:plu_number])
     @json_produce_item = {commodity: @produce_item.commodity,
