@@ -1,14 +1,8 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
 require_relative "plu_parcer"
 require_relative "nokogiri_produce_info_parser"
+require 'debugger'
 
-# parce and seeds plu commodity, variet, size etc
+parce and seeds plu commodity, variet, size etc
 parce_plu_excel
 
 # seeds ndb_no according to PLU number
@@ -24,16 +18,13 @@ navalorange = ProduceByPlu.find_by(plu_number: 3107)
 navalorange.ndb_no = "09202"
 navalorange.save
 
-# --- seeds how_to_select and how_to_store for ProduceByPLU objects --- #
+# --- Non-berries: Seeds how_to_select and how_to_store  --- #
 
 commodities = []
 
 ProduceByPlu.all.each do |produce|
-  if produce.commodity != "Berries"
-
+  if produce.commodity != "berries"
     commodities << produce.commodity
-  else
-    commodities << produce.variety
   end
 end
 
@@ -59,6 +50,38 @@ commodities.each do |commodity|
     produce.each do |produce|
       produce.update_attributes(how_to_select: "Not available", how_to_store: "Not available")
        counter += 1
+    end
+  end
+end
+
+# --- Berries: Seeds how_to_select and how_to_store --- #
+
+berries = []
+
+ProduceByPlu.all.each do |produce|
+  if produce.commodity == "berries"
+    berries << produce.variety
+  end
+end
+
+berries.each do |berry|
+  counter = 0
+  if Produce.new("http://www.fruitsandveggiesmorematters.org/#{berry}").how_to_select != nil
+    new_produce = Produce.new("http://www.fruitsandveggiesmorematters.org/#{berry}")
+    produce = ProduceByPlu.where(variety: "#{berry}")
+    produce.each do |produce|
+      produce.update_attributes(how_to_select: new_produce.how_to_select, how_to_store: new_produce.how_to_store)
+    end
+  elsif Produce.new("http://www.fruitsandveggiesmorematters.org/#{berry}-nutrition-selection-storage").how_to_select != nil
+    new_produce = Produce.new("http://www.fruitsandveggiesmorematters.org/#{berry}-nutrition-selection-storage")
+    produce = ProduceByPlu.where(variety: "#{berry}")
+    produce.each do |produce|
+      produce.update_attributes(how_to_select: new_produce.how_to_select, how_to_store: new_produce.how_to_store)
+    end
+  else
+    produce = ProduceByPlu.where(variety: "#{berry}")
+    produce.each do |produce|
+      produce.update_attributes(how_to_select: "Not available", how_to_store: "Not available")
     end
   end
 end
