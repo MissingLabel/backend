@@ -9,5 +9,4 @@ class ItemsController < ApplicationController
                           variety: @produce_item.variety}.to_json
   end
 
-
 end
