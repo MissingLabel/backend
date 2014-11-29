@@ -2,21 +2,10 @@ require_relative "plu_parcer"
 require_relative "nokogiri_produce_info_parser"
 require 'debugger'
 
-parce and seeds plu commodity, variet, size etc
+#parce and seeds plu commodity, variet, size etc
 parce_plu_excel
 
-# seeds ndb_no according to PLU number
-banana = ProduceByPlu.find_by(plu_number: 4011)
-banana.ndb_no = "09040"
-banana.save
 
-galaapple = ProduceByPlu.find_by(plu_number: 4135)
-galaapple.ndb_no = "09503"
-galaapple.save
-
-navalorange = ProduceByPlu.find_by(plu_number: 3107)
-navalorange.ndb_no = "09202"
-navalorange.save
 
 # --- Non-berries: Seeds how_to_select and how_to_store  --- #
 
@@ -27,6 +16,7 @@ ProduceByPlu.all.each do |produce|
     commodities << produce.commodity
   end
 end
+
 
 commodities.each do |commodity|
   counter = 0
@@ -86,10 +76,11 @@ berries.each do |berry|
   end
 end
 
+
 #ndb seed ---------------------------------------
 
 ProduceByPlu.all.each do |food|
-  new_produce = ProduceNdb.new("http://www.thefruitpages.com/chart#{food.commodity.split(' ')[0]}.shtml")
+  new_produce = ProduceNdb.new("http://www.thefruitpages.com/chart#{food.commodity.split(" ")[0]}.shtml")
 
 
   produce = ProduceByPlu.where(commodity: food.commodity)
@@ -99,5 +90,3 @@ ProduceByPlu.all.each do |food|
 end
 
 #------------------------------------------------
-
-

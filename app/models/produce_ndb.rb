@@ -11,11 +11,11 @@ class ProduceNdb
   end
 
   def page_check(response)
-    if response.code == "404"
-      return nil
-    else
+    if response.code == "200"
       page = Nokogiri::HTML(response.body)
       page
+    else
+      return nil
     end
   end
 
@@ -32,7 +32,9 @@ class ProduceNdb
     page = fetch
 
     if page != nil
-      @ndb_no = page.search('caption[3]').text.match(/\d+/)[0]
+      if @ndb_no = page.search('caption[3]').text.match(/\d+/) != nil
+        @ndb_no = page.search('caption[3]').text.match(/\d+/)[0]
+      end
     end
   end
 end
