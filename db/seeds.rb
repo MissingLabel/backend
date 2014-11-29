@@ -24,23 +24,41 @@ navalorange = ProduceByPlu.find_by(plu_number: 3107)
 navalorange.ndb_no = "09202"
 navalorange.save
 
-# seeds how_to_select and how_to_store for ProduceByPLU objects
+# --- seeds how_to_select and how_to_store for ProduceByPLU objects --- #
 
-commodities = ["guava", "kale", "pomegranate",
-               "grapes", "beets", "potato"]
+commodities = []
 
-# # Produce_by_plu.all.each do |produce|
-# #   if produce.commodity != "Berries"
-# #     commoditites << produce.commodity
-# #   else
-# #     commodities << produce.variety
-# #   end
-# # end
+ProduceByPlu.all.each do |produce|
+  if produce.commodity != "Berries"
+
+    commodities << produce.commodity
+  else
+    commodities << produce.variety
+  end
+end
 
 commodities.each do |commodity|
-  new_produce = Produce.new("http://www.fruitsandveggiesmorematters.org/#{commodity}")
-  produce = ProduceByPlu.where(commodity: "#{commodity}")
-  produce.each do |produce|
-    produce.update_attributes(how_to_select: new_produce.how_to_select, how_to_store: new_produce.how_to_store)
+  counter = 0
+  p counter
+  if Produce.new("http://www.fruitsandveggiesmorematters.org/#{commodity}").how_to_select != nil
+    new_produce = Produce.new("http://www.fruitsandveggiesmorematters.org/#{commodity}")
+    produce = ProduceByPlu.where(commodity: "#{commodity}")
+    produce.each do |produce|
+      produce.update_attributes(how_to_select: new_produce.how_to_select, how_to_store: new_produce.how_to_store)
+      counter += 1
+    end
+  elsif Produce.new("http://www.fruitsandveggiesmorematters.org/#{commodity}-nutrition-selection-storage").how_to_select != nil
+    new_produce = Produce.new("http://www.fruitsandveggiesmorematters.org/#{commodity}-nutrition-selection-storage")
+    produce = ProduceByPlu.where(commodity: "#{commodity}")
+    produce.each do |produce|
+      produce.update_attributes(how_to_select: new_produce.how_to_select, how_to_store: new_produce.how_to_store)
+       counter += 1
+    end
+  else
+    produce = ProduceByPlu.where(commodity: "#{commodity}")
+    produce.each do |produce|
+      produce.update_attributes(how_to_select: "Not available", how_to_store: "Not available")
+       counter += 1
+    end
   end
 end
