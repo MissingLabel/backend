@@ -1,29 +1,58 @@
 require 'net/http'
+require 'nokogiri'
 #incomplete
 class NutritionApi
+  attr_reader :calories
 
   def initialize(ndb_no)
     @ndb_no = ndb_no
+    # @produce = ProduceByPlu.find_by(ndb_no: ndb_no)
+    # @produce = {commodity: "Apple", variety: "Gala"}
   end
 
-  def call_usda_api(ndb_no)
-    url = URI.parse("http://api.data.gov/usda/ndb/reports/?ndbno=#{ndb_no}&type=f&format=xml&api_key=T7Or56nDBNq3C6VdIJC47Sz1qxprwdyByquFaV4A")
+  def call_usda_api
+    url = URI.parse("http://api.data.gov/usda/ndb/reports/?ndbno=#{@ndb_no}&type=f&format=xml&api_key=T7Or56nDBNq3C6VdIJC47Sz1qxprwdyByquFaV4A")
     req = Net::HTTP::Get.new(url.to_s)
     res = Net::HTTP.start(url.host, url.port) {|http|
       http.request(req)
     }
-    puts res.body
+    res.body
   end
 
-  def nokogiri_api_request()
-    call_usda_api
+  def nokogiri_api_request
+    xml_doc  = Nokogiri::XML(call_usda_api)
+    # @name = @produce.commodity
+    # @variety = @produce.variety
+    puts "should be calories _________________"
+    @calories = xml_doc.css("#5").first['valueper100g']
+    @total_fat = xml_doc.css("").first['valueper100g']
+    @fat_units = xml_doc.css("").first['valueper100g']
+    @fat_per =
+    @carb = xml_doc.css("").first['valueper100g']
+    @carb_per =
+    @carb_unit = xml_doc.css("").first['valueper100g']
+    @sodium = xml_doc.css("").first['valueper100g']
+    @sodium_per =
+    @sudium_units = xml_doc.css("").first['valueper100g']
+    @fiber = xml_doc.css("").first['valueper100g']
+    @fiber_per =
+    @sugars = xml_doc.css("").first['valueper100g']
+    @sugars_unit = xml_doc.css("").first['valueper100g']
+    @protein = xml_doc.css("").first['valueper100g']
+    @protein_per =
+    @protein_units = xml_doc.css("").first['valueper100g']
+    @lower_label_1
+  end
+
+  def prettify_api_info
   end
 
 end
 # "http://api.data.gov/usda/ndb/reports/?ndbno=09503&type=f&format=xml&api_key=T7Or56nDBNq3C6VdIJC47Sz1qxprwdyByquFaV4A"
-# test = NutritionApi.new
+test = NutritionApi.new("09503")
 
-# test.call_usda_api("09503")
+# test.call_usda_api
+test.nokogiri_api_request
 
 # jsonobject = {:name => 'Apple',
 #               :variety => 'Honeycrisp',
