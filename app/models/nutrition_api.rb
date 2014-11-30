@@ -7,7 +7,7 @@ class NutritionApi
   def initialize(ndb_no)
     @ndb_no = ndb_no
     @produce = ProduceByPlu.find_by(ndb_no: ndb_no)
-    # @produce = {commodity: "Apple", variety: "Gala"}
+
   end
 
   def call_usda_api
