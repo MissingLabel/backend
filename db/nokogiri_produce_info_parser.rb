@@ -1,7 +1,7 @@
 require 'open-uri'
 require 'net/http'
 require 'nokogiri'
-require 'debugger'
+# require 'debugger'
 
 class Produce
   attr_reader :how_to_select, :how_to_store, :uri
