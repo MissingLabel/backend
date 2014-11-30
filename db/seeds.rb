@@ -32,28 +32,28 @@ berries.each do |berry|
   if winter_list.list.include?(berry)
     produce = ProduceByPlu.where(variety: "#{berry}")
     produce.each do |item|
-      item.seasons << winter
+      item.seasons << winter_1
     end
   end
   spring_list = Seasonal_list.new("http://www.fruitsandveggiesmorematters.org/whats-in-season-spring")
   if spring_list.list.include?(berry)
     produce = ProduceByPlu.where(variety: "#{berry}")
     produce.each do |item|
-      item.seasons << spring
+      item.seasons << spring_2
     end
   end
   summer_list = Seasonal_list.new("http://www.fruitsandveggiesmorematters.org/whats-in-season-summer")
   if summer_list.list.include?(berry)
     produce = ProduceByPlu.where(variety: "#{berry}")
     produce.each do |item|
-      item.seasons << summer
+      item.seasons << summer_3
     end
   end
   fall_list = Seasonal_list.new("http://www.fruitsandveggiesmorematters.org/whats-in-season-fall")
   if fall_list.list.include?(berry)
     produce = ProduceByPlu.where(variety: "#{berry}")
     produce.each do |item|
-      item.seasons << fall
+      item.seasons << fall_4
     end
   end
 end
@@ -95,7 +95,7 @@ commodities.each do |commodity|
   end
   fall_list = Seasonal_list.new("http://www.fruitsandveggiesmorematters.org/whats-in-season-fall")
   if fall_list.list.include?(commodity)
-    produce = ProduceByPlu.where  (commodity: "#{commodity}")
+    produce = ProduceByPlu.where(commodi ty: "#{commodity}")
     produce.each do |item|
       item.seasons << Season.find(4)
     end
