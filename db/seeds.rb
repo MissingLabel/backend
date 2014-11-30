@@ -4,14 +4,15 @@ require_relative "nokogiri_seasons_parser"
 # require 'debugger'
 
 # --- Seeds ProduceByPlu with commodity, variet, size --- #
+
 parce_plu_excel
 
 # --- Seeds seasons --- #
 
-winter = Season.create!(name: "Winter")
-spring = Season.create!(name: "Spring")
-summer = Season.create!(name: "Summer")
-fall = Season.create!(name: "Fall")
+winter_1 = Season.create!(name: "Winter")
+spring_2 = Season.create!(name: "Spring")
+summer_3 = Season.create!(name: "Summer")
+fall_4 = Season.create!(name: "Fall")
 
 # --- Seeds seasons for berries --- #
 
@@ -22,6 +23,8 @@ ProduceByPlu.all.each do |produce|
     berries << produce.variety
   end
 end
+
+berries.uniq!
 
 berries.each do |berry|
   p berry
@@ -60,10 +63,12 @@ end
 commodities = []
 
 ProduceByPlu.all.each do |produce|
-  if produce.commodity != "berries" || produce.commodity != "melon" || produce.commodity != "apples" || produce.commodity != "bananas"
+  if produce.commodity != "berries" && produce.commodity != "melon"
     commodities << produce.commodity
   end
 end
+
+commodities.uniq!
 
 commodities.each do |commodity|
   p commodity
@@ -71,92 +76,132 @@ commodities.each do |commodity|
   if winter_list.list.include?(commodity)
     produce = ProduceByPlu.where(commodity: "#{commodity}")
     produce.each do |item|
-      item.seasons << winter
+      item.seasons << Season.find(1)
     end
   end
   spring_list = Seasonal_list.new("http://www.fruitsandveggiesmorematters.org/whats-in-season-spring")
   if spring_list.list.include?(commodity)
     produce = ProduceByPlu.where(commodity: "#{commodity}")
     produce.each do |item|
-      item.seasons << spring
+      item.seasons << Season.find(2)
     end
   end
   summer_list = Seasonal_list.new("http://www.fruitsandveggiesmorematters.org/whats-in-season-summer")
   if summer_list.list.include?(commodity)
     produce = ProduceByPlu.where(commodity: "#{commodity}")
     produce.each do |item|
-      item.seasons << summer
+      item.seasons << Season.find(3)
     end
   end
   fall_list = Seasonal_list.new("http://www.fruitsandveggiesmorematters.org/whats-in-season-fall")
   if fall_list.list.include?(commodity)
+    produce = ProduceByPlu.where  (commodity: "#{commodity}")
+    produce.each do |item|
+      item.seasons << Season.find(4)
+    end
+  end
+  all_year = Seasonal_list.new("http://www.fruitsandveggiesmorematters.org/whats-in-season-all-year")
+  if all_year.list.include?(commodity)
     produce = ProduceByPlu.where(commodity: "#{commodity}")
     produce.each do |item|
-      item.seasons << fall
+      item.seasons << Season.all
     end
   end
 end
 
-# --- Non-berries: Seeds how_to_select and how_to_store  --- #
+# --- Pears --- #
 
-
-def commodity_update
-  produce = ProduceByPlu.where(commodity: "#{commodity}")
-  produce.each do |produce|
-    produce.update_attributes(how_to_select: new_produce.how_to_select, how_to_store: new_produce.how_to_store)
+pears = ProduceByPlu.where(commodity: "pears")
+  pears.each do |pear|
+    pear.seasons << Season.find(1)
+    pear.seasons << Season.find(4)
   end
-end
-
-commodities.each do |commodity|
-  p counter
-  if Produce.new("http://www.fruitsandveggiesmorematters.org/#{commodity}").how_to_select != nil
-    new_produce = Produce.new("http://www.fruitsandveggiesmorematters.org/#{commodity}")
-  elsif Produce.new("http://www.fruitsandveggiesmorematters.org/#{commodity}-nutrition-selection-storage").how_to_select != nil
-    new_produce = Produce.new("http://www.fruitsandveggiesmorematters.org/#{commodity}-nutrition-selection-storage")
-    commodity_update
-  else
-    produce = ProduceByPlu.where(commodity: "#{commodity}")
-    produce.each do |produce|
-      produce.update_attributes(how_to_select: "Not available", how_to_store: "Not available")
-    end
-  end
-end
 
 # --- Apples --- #
 
-def apples_update
-  all_apples = ProduceByPlu.where(commodity: "apples")
-  all_apples.each do |apple|
-    apple.update_attributes(how_to_select: new_produce.how_to_select, how_to_store: new_produce.how_to_store)
-  end
-end
+all_apples = ProduceByPlu.where(commodity: "apples")
 
 if Produce.new("http://www.fruitsandveggiesmorematters.org/apple").how_to_select != nil
   new_produce = Produce.new("http://www.fruitsandveggiesmorematters.org/apple")
-  apples_update
-else  Produce.new("http://www.fruitsandveggiesmorematters.org/apple-nutrition-selection-storage").how_to_select != nil
+  all_apples.each do |apple|
+    apple.update_attributes(how_to_select: new_produce.how_to_select, how_to_store: new_produce.how_to_store)
+  end
+elsif  Produce.new("http://www.fruitsandveggiesmorematters.org/apple-nutrition-selection-storage").how_to_select != nil
   new_produce = Produce.new("http://www.fruitsandveggiesmorematters.org/apple-nutrition-selection-storage")
-  apples_update
+  all_apples.each do |apple|
+    apple.update_attributes(how_to_select: new_produce.how_to_select, how_to_store: new_produce.how_to_store)
+  end
+else
+  all_apples.each do |apple|
+    apple.update_attributes(how_to_select: "Not available", how_to_store: "Not available")
+  end
 end
 
 # --- Bananas --- #
 
-def bananas_update
-  all_bananas = ProduceByPlu.where(commodity: "bananas")
-  all_bananas.each do |banana|
-    banana.update_attributes(how_to_select: new_produce.how_to_select, how_to_store: new_produce.how_to_store)
-  end
-end
+all_bananas = ProduceByPlu.where(commodity: "bananas")
 
 if Produce.new("http://www.fruitsandveggiesmorematters.org/banana").how_to_select != nil
   new_produce = Produce.new("http://www.fruitsandveggiesmorematters.org/banana")
-  bananas_update
+  all_bananas.each do |banana|
+    banana.update_attributes(how_to_select: new_produce.how_to_select, how_to_store: new_produce.how_to_store)
+  end
 elsif  Produce.new("http://www.fruitsandveggiesmorematters.org/banana-nutrition-selection-storage").how_to_select != nil
   new_produce = new_produce = Produce.new("http://www.fruitsandveggiesmorematters.org/banana-nutrition-selection-storage")
-  bananas_update
+  all_bananas.each do |banana|
+    banana.update_attributes(how_to_select: new_produce.how_to_select, how_to_store: new_produce.how_to_store)
+  end
+else
+  all_bananas.each do |banana|
+    banana.update_attributes(how_to_select: "Not available", how_to_store: "Not available")
+  end
 end
 
-# --- Melons --- #
+# --- Oranges --- #
+
+all_oranges = ProduceByPlu.where(commodity: "oranges")
+
+if Produce.new("http://www.fruitsandveggiesmorematters.org/orange").how_to_select != nil
+  new_produce = Produce.new("http://www.fruitsandveggiesmorematters.org/orange")
+  all_oranges.each do |orange|
+    orange.update_attributes(how_to_select: new_produce.how_to_select, how_to_store: new_produce.how_to_store)
+  end
+elsif  Produce.new("http://www.fruitsandveggiesmorematters.org/orange-nutrition-selection-storage").how_to_select != nil
+  new_produce = Produce.new("http://www.fruitsandveggiesmorematters.org/orange-nutrition-selection-storage")
+  all_oranges.each do |orange|
+    orange.update_attributes(how_to_select: new_produce.how_to_select, how_to_store: new_produce.how_to_store)
+  end
+else
+  all_oranges.each do |orange|
+    orange.update_attributes(how_to_select: "Not available", how_to_store: "Not available")
+  end
+end
+
+# --- Berries: Seeds how_to_select and how_to_store --- #
+
+berries.each do |berry|
+  p berry
+  if Produce.new("http://www.fruitsandveggiesmorematters.org/#{berry}").how_to_select != nil
+    new_produce = Produce.new("http://www.fruitsandveggiesmorematters.org/#{berry}")
+    all_berries = ProduceByPlu.where(variety: "#{berry}")
+    all_berries.each do |berry|
+      berry.update_attributes(how_to_select: new_produce.how_to_select, how_to_store: new_produce.how_to_store)
+    end
+  elsif Produce.new("http://www.fruitsandveggiesmorematters.org/#{berry}-nutrition-selection-storage").how_to_select != nil
+    new_produce = Produce.new("http://www.fruitsandveggiesmorematters.org/#{berry}-nutrition-selection-storage")
+    all_berries = ProduceByPlu.where(variety: "#{berry}")
+    all_berries.each do |berry|
+      berry.update_attributes(how_to_select: new_produce.how_to_select, how_to_store: new_produce.how_to_store)
+    end
+  else
+    all_berries = ProduceByPlu.where(variety: "#{berry}")
+    all_berries.each do |berry|
+      berry.update_attributes(how_to_select: "Not available", how_to_store: "Not available")
+    end
+  end
+end
+
+# # --- Melons --- #
 
 melons = []
 
@@ -166,20 +211,19 @@ ProduceByPlu.all.each do |produce|
   end
 end
 
-def melon_update
-  produce = ProduceByPlu.where(variety: "#{melon}")
-  produce.each do |produce|
-    produce.update_attributes(how_to_select: new_produce.how_to_select, how_to_store: new_produce.how_to_store)
-  end
-end
-
 melons.each do |melon|
+  p melon
   if Produce.new("http://www.fruitsandveggiesmorematters.org/#{melon}").how_to_select != nil
     new_produce = Produce.new("http://www.fruitsandveggiesmorematters.org/#{melon}")
-    melon_update
+    produce = ProduceByPlu.where(variety: "#{melon}")
+    produce.each do |produce|
+      produce.update_attributes(how_to_select: new_produce.how_to_select, how_to_store: new_produce.how_to_store)
+    end
   elsif Produce.new("http://www.fruitsandveggiesmorematters.org/#{melon}-nutrition-selection-storage").how_to_select != nil
     new_produce = Produce.new("http://www.fruitsandveggiesmorematters.org/#{melon}-nutrition-selection-storage")
-    melon_update
+    produce = ProduceByPlu.where(variety: "#{melon}")
+    produce.each do |produce|
+      produce.update_attributes(how_to_select: new_produce.how_to_select, how_to_store: new_produce.how_to_store)
     end
   else
     produce = ProduceByPlu.where(variety: "#{melon}")
@@ -189,54 +233,75 @@ melons.each do |melon|
   end
 end
 
-# --- Berries: Seeds how_to_select and how_to_store --- #
+# --- Non-berries: Seeds how_to_select and how_to_store  --- #
 
-def berries_update
-  produce = ProduceByPlu.where(variety: "#{berry}")
-  produce.each do |produce|
-    produce.update_attributes(how_to_select: new_produce.how_to_select, how_to_store: new_produce.how_to_store)
+com = []
+
+ProduceByPlu.all.each do |produce|
+  if produce.commodity != "berries" && produce.commodity != "melon" && produce.commodity != "oranges" && produce.commodity != "apples" && produce.commodity != "bananas"
+    com << produce.commodity
   end
 end
 
-berries.each do |berry|
-  if Produce.new("http://www.fruitsandveggiesmorematters.org/#{berry}").how_to_select != nil
-    new_produce = Produce.new("http://www.fruitsandveggiesmorematters.org/#{berry}")
-    berries_update
-  elsif Produce.new("http://www.fruitsandveggiesmorematters.org/#{berry}-nutrition-selection-storage").how_to_select != nil
-    new_produce = Produce.new("http://www.fruitsandveggiesmorematters.org/#{berry}-nutrition-selection-storage")
-    berries_update
+com.uniq!
+
+com.each do |commodity|
+  p commodity
+  if Produce.new("http://www.fruitsandveggiesmorematters.org/#{commodity}").how_to_select != nil
+    new_produce = Produce.new("http://www.fruitsandveggiesmorematters.org/#{commodity}")
+    produce = ProduceByPlu.where(commodity: "#{commodity}")
+    produce.each do |produce|
+      produce.update_attributes(how_to_select: new_produce.how_to_select, how_to_store: new_produce.how_to_store)
+    end
+  elsif Produce.new("http://www.fruitsandveggiesmorematters.org/#{commodity}-nutrition-selection-storage").how_to_select != nil
+    new_produce = Produce.new("http://www.fruitsandveggiesmorematters.org/#{commodity}-nutrition-selection-storage")
+    produce = ProduceByPlu.where(commodity: "#{commodity}")
+    produce.each do |produce|
+      produce.update_attributes(how_to_select: new_produce.how_to_select, how_to_store: new_produce.how_to_store)
     end
   else
-    produce = ProduceByPlu.where(variety: "#{berry}")
+    produce = ProduceByPlu.where(commodity: "#{commodity}")
     produce.each do |produce|
       produce.update_attributes(how_to_select: "Not available", how_to_store: "Not available")
     end
   end
 end
 
+# ndb seed ---------------------------------------
 
-#ndb seed ---------------------------------------
-
-# ProduceByPlu.all.each do |food|
-#   new_produce = ProduceNdb.new("http://www.thefruitpages.com/chart#{food.commodity.split(" ")[0]}.shtml")
-
-
-#   produce = ProduceByPlu.where(commodity: food.commodity)
-#   produce.each do |produce|
-#     produce.update_attributes(ndb_no: new_produce.ndb_no)
-#   end
-# end
-
-# berries.each do |berry|
-#   new_produce = ProduceNdb.new("http://www.thefruitpages.com/chart#{berry.split(" ")[0]}.shtml")
-#    produce = ProduceByPlu.where(variety: berry)
-
-#   produce.each do |produce|
-#     produce.update_attributes(ndb_no: new_produce.ndb_no)
-#   end
-# end
-
-#------------------------------------------------
+ProduceByPlu.all.each do |food|
+  new_produce = ProduceNdb.new("http://www.thefruitpages.com/chart#{food.commodity.split(" ")[0]}.shtml")
 
 
+  produce = ProduceByPlu.where(commodity: food.commodity)
+  produce.each do |produce|
+    produce.update_attributes(ndb_no: new_produce.ndb_no)
+  end
+end
+
+berries.each do |berry|
+  new_produce = ProduceNdb.new("http://www.thefruitpages.com/chart#{berry.split(" ")[0]}.shtml")
+   produce = ProduceByPlu.where(variety: berry)
+
+  produce.each do |produce|
+    produce.update_attributes(ndb_no: new_produce.ndb_no)
+  end
+end
+
+# ------------------------------------------------
+
+
+# --- Location --- #
+
+farm_1 = Location.create!(name: "All Seasons Apple Orchard", address: "14510 Route 176 WoodStock, IL")
+
+# --- ProduceByGs1 -- #
+
+honeycrisp = ProduceByPlu.find_by(plu_number: "3283")
+
+ProduceByGs1.create!(produce_by_plu: honeycrisp, location: farm_1, peticides_chemicals: "true", gs1_number: "0100736264032838" )
+
+# --- User --- #
+
+User.create!(email: "joe@gmail.com", password: "password", zip_code: 12345)
 
