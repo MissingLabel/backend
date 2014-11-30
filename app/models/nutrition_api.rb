@@ -25,23 +25,55 @@ class NutritionApi
     # @variety = @produce.variety
     puts "should be calories _________________"
     @calories = xml_doc.css("#5").first['valueper100g']
-    @total_fat = xml_doc.css("").first['valueper100g']
-    @fat_units = xml_doc.css("").first['valueper100g']
-    @fat_per =
-    @carb = xml_doc.css("").first['valueper100g']
-    @carb_per =
-    @carb_unit = xml_doc.css("").first['valueper100g']
-    @sodium = xml_doc.css("").first['valueper100g']
-    @sodium_per =
-    @sudium_units = xml_doc.css("").first['valueper100g']
-    @fiber = xml_doc.css("").first['valueper100g']
-    @fiber_per =
-    @sugars = xml_doc.css("").first['valueper100g']
-    @sugars_unit = xml_doc.css("").first['valueper100g']
-    @protein = xml_doc.css("").first['valueper100g']
-    @protein_per =
-    @protein_units = xml_doc.css("").first['valueper100g']
-    @lower_label_1
+    @total_fat = xml_doc.css("#2").first['valueper100g']
+    @fat_units = xml_doc.css("").first['unit']
+    @fat_per = (@total_fat.to_i/65)
+    @carb = xml_doc.css("#3").first['valueper100g']
+    @carb_per = (@carb.to_i/325)
+    @carb_unit = xml_doc.css("#3").first['unit']
+    @sodium = xml_doc.css("#26").first['valueper100g']
+    @sodium_per = (@sodium.to_i/2400)
+    @sudium_units = xml_doc.css("#26").first['unit']
+    @fiber = xml_doc.css("#20").first['valueper100g']
+    @fiber_per = (@fiber.to_i/26)
+    @sugars = xml_doc.css("#18").first['valueper100g']
+    @sugars_unit = xml_doc.css("#18").first['unit']
+    @protein_num = xml_doc.css("#1").first['valueper100g']
+    @protein_per = (@protein_num.to_i/175)
+    @protein_units = xml_doc.css("#1").first['unit']
+    @calcium_num = xml_doc.css("#21").first['valueper100g']
+    @calcium_units = xml_doc.css("#21").first['unit']
+    @calcium_per = (@calcium_num.to_i/1000)
+    @calcium_name = "Calcium"
+    @iron_num = xml_doc.css("#22").first['valueper100g']
+    @iron_units = xml_doc.css("#22").first['unit']
+    @iron_per = (@iron_num.to_i/18)
+    @iron_name = "Iron"
+    @magnesium_num = xml_doc.css("#23").first['valueper100g']
+    @magnesium_units = xml_doc.css("#23").first['unit']
+    @magnesium_per = (@magnesium_num.to_i/400)
+    @magnesium_name = "Magnesium"
+    @potassium_num = xml_doc.css("#25").first['valueper100g']
+    @potassium_units = xml_doc.css("#25").first['unit']
+    @potassium_per = (@potassium_num.to_i/3500)
+    @potassium_name = "Potassium"
+    @zinc_num = xml_doc.css("#27").first['valueper100g']
+    @zinc_units = xml_doc.css("#27").first['unit']
+    @zinc_per = (@zinc_num.to_i/15)
+    @zinc_name = "Zinc"
+    @niacin_num = xml_doc.css("#55").first['valueper100g']
+    @niacin_units = xml_doc.css("#55").first['unit']
+    @niacin_per = (@niacin_num.to_i/20)
+    @niacin_name = "Niacin"
+    @b6_num = xml_doc.css("#57").first['valueper100g']
+    @b6_units = xml_doc.css("#57").first['unit']
+    @b6_per = (@b6_num.to_i/2)
+    @b6_name = "Vitamin B-6"
+    @a_num = xml_doc.css("#32").first['valueper100g']
+    @a_units = xml_doc.css("#32").first['unit']
+    @a_per = (@a_num.to_i/5000)
+    @a_name = "Vitamin A"
+    @a_per
   end
 
   def prettify_api_info
