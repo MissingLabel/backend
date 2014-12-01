@@ -13,22 +13,23 @@ class SessionsController < ApplicationController
       if @user.authenticate(params[:password])
         session[:current_user_id] = @user.id
 
-        @loginSecure = "True"
+        status[:loginSecure] = "True"
 
         respond_to do |format|
-          format.json { render :json => @loginSecure }
+          format.json { render :json => status }
         end
+
       else
-        @loginSecure = "False"
+        status[:loginSecure] = "False"
 
         respond_to do |format|
-          format.json { render :json => @loginSecure }
+          format.json { render :json => status }
         end
       end
     else
-      @loginSecure = "False"
+      status[:loginSecure] = "False"
       respond_to do |format|
-        format.json { render :json => @loginSecure }
+        format.json { render :json => status }
       end
     end
   end
