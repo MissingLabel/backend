@@ -134,7 +134,7 @@ commodities.each do |commodity|
   end
   fall_list = Seasonal_list.new("http://www.fruitsandveggiesmorematters.org/whats-in-season-fall")
   if fall_list.list.include?(commodity)
-    produce = ProduceByPlu.where(commodity: "#{commodity}")
+    produce = ProduceByPlu.where(commodi ty: "#{commodity}")
     produce.each do |item|
       item.seasons << Season.find(4)
     end

@@ -78,7 +78,7 @@ class NutritionApi
   def prettify_api_info
     nokogiri_api_request
 
-            {:name => @produce.commodity,
+            { :name => @produce.commodity,
               :variety => @produce.variety,
               :calories => @calories,
               :total_fat => @total_fat,
@@ -106,9 +106,7 @@ class NutritionApi
                                {:units => @zinc_units, :name => @zinc_name, :num => @zinc_num, :per => @zinc_per},
                                {:units => @niacin_units, :name => @niacin_name, :num => @niacin_num, :per => @niacin_per},
                                {:units => @b6_units, :name => 'Vitamin B-6', :num => @b6_num, :per => @b6_per}],
-              :organic => true,
-              :gmo => false,
-              :seasons => 'Fall, Spring',
+              :seasons => @produce.seasons.uniq.join(", "),
               :chemicals => true,
               :farm_name => 'All Seasons Apple Orchard',
               :farm_address => '14510 Route 176, Woodstock, IL',
