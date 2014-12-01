@@ -6,18 +6,20 @@ class ItemsController < ApplicationController
     print params
     @number = params[:number]
 
-    if @number.length < 6
-      @plu_number = params[:number]
-    else
-      @gs1_number = params[:number]
-    end
+    @produce_item = ProduceByPlu.find_by(plu_number: @number)
 
-    @item = plu_or_gs1_item(@plu_number, @gs1_number)
+    # if @number.length < 6
+    #   @plu_number = params[:number]
+    # else
+    #   @gs1_number = params[:number]
+    # end
 
-    nutrition = NutritionApi.new(@item.ndb_no)
-    @produce_item = nutrition.prettify_api_info
+    # @item = plu_or_gs1_item(@plu_number, @gs1_number)
 
-    @produce_item = organic_or_gmo(@number, @produce_item)
+    # nutrition = NutritionApi.new(@item.ndb_no)
+    # @produce_item = nutrition.prettify_api_info
+
+    # @produce_item = organic_or_gmo(@number, @produce_item)
 
 
     respond_to do |format|
