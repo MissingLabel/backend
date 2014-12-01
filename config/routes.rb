@@ -1,13 +1,13 @@
 Rails.application.routes.draw do
 
   # get "login" => "sessions#new"
-  post "login" => "sessions#create"
-  delete "logout" => "sessions#destroy"
+  post "login" => "sessions#create", :defaults => { :format => :json }
+  delete "logout" => "sessions#destroy", :defaults => { :format => :json }
 
-  get "items/:number" => "items#json_object" #,:defaults => { :format => :json }
+  get "items/:number" => "items#json_object", :defaults => { :format => :json }
   get "produce" => "produce#index"
 
-  resources :users, only:[:create, :new, :destroy]
+  resources :users, only:[:create, :new, :destroy], :defaults => { :format => :json }
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

@@ -15,21 +15,24 @@ class SessionsController < ApplicationController
 
         status = {:loginSecure => "True"}
 
-        respond_to do |format|
-          format.json { render :json => status }
+        # respond_to do |format|
+        #   format.json { render :json => status }
+        render :json => status 
         end
 
       else
         status = {:loginSecure => "False"}
 
-        respond_to do |format|
-          format.json { render :json => status }
+        # respond_to do |format|
+        #   format.json { render :json => status }
+        render :json => status 
         end
       end
     else
       status = {:loginSecure => "False"}
-      respond_to do |format|
-        format.json { render :json => status }
+      # respond_to do |format|
+      #   format.json { render :json => status }
+      render :json => status 
       end
     end
   end
