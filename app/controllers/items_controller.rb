@@ -6,8 +6,6 @@ class ItemsController < ApplicationController
     print params
     @number = params[:number]
 
-    # @produce_item = ProduceByPlu.find_by(plu_number: @number)
-
     if @number.length < 6
       @plu_number = params[:number]
     else
@@ -22,9 +20,6 @@ class ItemsController < ApplicationController
     @produce_item = organic_or_gmo(@number, @produce_item)
     print @produce_item
 
-    # respond_to do |format|
-    #   format.json { render :json => @produce_item }
-    # end
     render :json => @produce_item
   end
 
