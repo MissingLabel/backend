@@ -46,8 +46,8 @@ class Produce
     unless get_produce_info == nil
       string = get_produce_info.gsub(/\s+/m, ' ').chomp
       select_info = string.scan(/How To Select.*How To Store/i)[0]
-      no_select = select_info.sub(/How To Select/i, '')
-      no_store = no_select.sub(/How To Store/i, '')
+      no_select = select_info.sub(/How To Select/i, '') if select_info
+      no_store = no_select.sub(/How To Store/i, '') if no_select
     end
   end
 
@@ -55,8 +55,8 @@ class Produce
     unless get_produce_info == nil
       string = get_produce_info.gsub(/\s+/m, ' ').chomp
       store_info = string.scan(/How To Store.*Nutrition Benefits/i)[0]
-      no_store = store_info.sub(/How To Store/i, '')
-      no_store.sub(/Nutrition Benefits/i, '')
+      no_store = store_info.sub(/How To Store/i, '') if store_info
+      no_store.sub(/Nutrition Benefits/i, '') if no_store
     end
   end
 

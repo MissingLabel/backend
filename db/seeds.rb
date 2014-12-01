@@ -7,14 +7,7 @@ require_relative "nokogiri_seasons_parser"
 
 parce_plu_excel
 
-# --- Seeds seasons --- #
-
-winter_1 = Season.create!(name: "Winter")
-spring_2 = Season.create!(name: "Spring")
-summer_3 = Season.create!(name: "Summer")
-fall_4 = Season.create!(name: "Fall")
-
-# --- Seeds seasons for berries --- #
+# ndb seed ---------------------------------------
 
 berries = []
 
@@ -24,6 +17,52 @@ ProduceByPlu.all.each do |produce|
   end
 end
 
+ProduceByPlu.all.each do |food|
+  new_produce = ProduceNdb.new("http://www.thefruitpages.com/chart#{food.commodity.split(" ")[0]}.shtml")
+
+
+  produce = ProduceByPlu.where(commodity: food.commodity)
+  produce.each do |produce|
+    produce.update_attributes(ndb_no: new_produce.ndb_no)
+  end
+end
+
+berries.each do |berry|
+  new_produce = ProduceNdb.new("http://www.thefruitpages.com/chart#{berry.split(" ")[0]}.shtml")
+   produce = ProduceByPlu.where(variety: berry)
+
+  produce.each do |produce|
+    produce.update_attributes(ndb_no: new_produce.ndb_no)
+  end
+end
+
+# ------------------------------------------------
+
+
+# --- Location --- #
+
+farm_1 = Location.create!(name: "All Seasons Apple Orchard", address: "14510 Route 176 WoodStock, IL")
+
+# --- ProduceByGs1 -- #
+
+honeycrisp = ProduceByPlu.find_by(plu_number: "3283")
+
+ProduceByGs1.create!(produce_by_plu: honeycrisp, location: farm_1, peticides_chemicals: "true", gs1_number: "0100736264032838" )
+
+# --- User --- #
+
+User.create!(email: "joe@gmail.com", password: "password", zip_code: 12345)
+
+# --- Seeds seasons --- #
+
+winter_1 = Season.create!(name: "Winter")
+spring_2 = Season.create!(name: "Spring")
+summer_3 = Season.create!(name: "Summer")
+fall_4 = Season.create!(name: "Fall")
+
+# --- Seeds seasons for berries --- #
+
+
 berries.uniq!
 
 berries.each do |berry|
@@ -32,28 +71,28 @@ berries.each do |berry|
   if winter_list.list.include?(berry)
     produce = ProduceByPlu.where(variety: "#{berry}")
     produce.each do |item|
-      item.seasons << winter
+      item.seasons << winter_1
     end
   end
   spring_list = Seasonal_list.new("http://www.fruitsandveggiesmorematters.org/whats-in-season-spring")
   if spring_list.list.include?(berry)
     produce = ProduceByPlu.where(variety: "#{berry}")
     produce.each do |item|
-      item.seasons << spring
+      item.seasons << spring_2
     end
   end
   summer_list = Seasonal_list.new("http://www.fruitsandveggiesmorematters.org/whats-in-season-summer")
   if summer_list.list.include?(berry)
     produce = ProduceByPlu.where(variety: "#{berry}")
     produce.each do |item|
-      item.seasons << summer
+      item.seasons << summer_3
     end
   end
   fall_list = Seasonal_list.new("http://www.fruitsandveggiesmorematters.org/whats-in-season-fall")
   if fall_list.list.include?(berry)
     produce = ProduceByPlu.where(variety: "#{berry}")
     produce.each do |item|
-      item.seasons << fall
+      item.seasons << fall_4
     end
   end
 end
@@ -95,7 +134,7 @@ commodities.each do |commodity|
   end
   fall_list = Seasonal_list.new("http://www.fruitsandveggiesmorematters.org/whats-in-season-fall")
   if fall_list.list.include?(commodity)
-    produce = ProduceByPlu.where  (commodity: "#{commodity}")
+    produce = ProduceByPlu.where(commodity: "#{commodity}")
     produce.each do |item|
       item.seasons << Season.find(4)
     end
@@ -267,41 +306,4 @@ com.each do |commodity|
   end
 end
 
-# ndb seed ---------------------------------------
-
-ProduceByPlu.all.each do |food|
-  new_produce = ProduceNdb.new("http://www.thefruitpages.com/chart#{food.commodity.split(" ")[0]}.shtml")
-
-
-  produce = ProduceByPlu.where(commodity: food.commodity)
-  produce.each do |produce|
-    produce.update_attributes(ndb_no: new_produce.ndb_no)
-  end
-end
-
-berries.each do |berry|
-  new_produce = ProduceNdb.new("http://www.thefruitpages.com/chart#{berry.split(" ")[0]}.shtml")
-   produce = ProduceByPlu.where(variety: berry)
-
-  produce.each do |produce|
-    produce.update_attributes(ndb_no: new_produce.ndb_no)
-  end
-end
-
-# ------------------------------------------------
-
-
-# --- Location --- #
-
-farm_1 = Location.create!(name: "All Seasons Apple Orchard", address: "14510 Route 176 WoodStock, IL")
-
-# --- ProduceByGs1 -- #
-
-honeycrisp = ProduceByPlu.find_by(plu_number: "3283")
-
-ProduceByGs1.create!(produce_by_plu: honeycrisp, location: farm_1, peticides_chemicals: "true", gs1_number: "0100736264032838" )
-
-# --- User --- #
-
-User.create!(email: "joe@gmail.com", password: "password", zip_code: 12345)
 
