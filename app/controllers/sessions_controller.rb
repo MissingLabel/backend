@@ -4,22 +4,32 @@ class SessionsController < ApplicationController
     @user = User.find(session[:current_user_id]) if @user
   end
 
-  def new
-    @user = User.find(session[:current_user_id]) if session[:current_user_id]
-  end
+  # def new
+  #   @user = User.find(email: params[:email]) #session[:current_user_id]) if session[:current_user_id]
+  # end
 
   def create
-    if @user = User.find_by(email: params[:user][:email])
-      if @user.authenticate(params[:user][:password])
+    if @user = User.find_by(email: params[:email])
+      if @user.authenticate(params[:password])
         session[:current_user_id] = @user.id
-        redirect_to '/'
+
+        @loginSecure = "True"
+
+        respond_to do |format|
+          format.json { render :json => @loginSecure }
+        end
       else
-        # flash.now[:notice] = "Invalid email or password."
-        render '/sessions/new'
+        @loginSecure = "False"
+
+        respond_to do |format|
+          format.json { render :json => @loginSecure }
+        end
       end
     else
-      # flash.now[:notice] = "Invalid email or password."
-      render '/sessions/new'
+      @loginSecure = "False"
+      respond_to do |format|
+        format.json { render :json => @loginSecure }
+      end
     end
   end
 
