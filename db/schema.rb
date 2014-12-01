@@ -26,7 +26,7 @@ ActiveRecord::Schema.define(version: 20141130205604) do
 
   create_table "produce_by_gs1s", force: true do |t|
     t.integer  "produce_by_plu_id"
-    t.text     "peticides_chemicals"
+    t.text     "pesticides_chemicals"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "location"
