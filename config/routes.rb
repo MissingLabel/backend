@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   post "login" => "sessions#create"
   delete "logout" => "sessions#destroy"
 
-  get "items/:plu_number" => "items#json_object" #,:defaults => { :format => :json }
+  get "items/:number" => "items#json_object" #,:defaults => { :format => :json }
   get "produce" => "produce#index"
 
   resources :users, only:[:create, :new, :destroy]
