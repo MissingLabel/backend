@@ -1,5 +1,6 @@
 module ItemHelper
 
+<<<<<<< HEAD
 
   def plu_or_gs1_item(@plu_number, @gs1_number)
     if @plu_number
@@ -28,5 +29,4 @@ module ItemHelper
     end
     @produce_item
   end
-
 end
