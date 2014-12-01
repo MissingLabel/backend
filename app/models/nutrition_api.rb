@@ -110,7 +110,7 @@ class NutritionApi
               :chemicals => true,
               :farm_name => 'All Seasons Apple Orchard',
               :farm_address => '14510 Route 176, Woodstock, IL',
-              :plu_no => @produce.plu_num,
+              :plu_no => @produce.plu_number,
               :how_pick => @produce.how_to_select,
               :how_store => @produce.how_to_store}
   end
