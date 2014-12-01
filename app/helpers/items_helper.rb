@@ -1,15 +1,13 @@
 module ItemsHelper
 
-  def plu_or_gs1_item(plu_number, gs1_number)
-    if @plu_number
-      if @plu_number.length == 5
-        @plu_number = @plu_number[1..-1]
+  def plu_item(plu_number)
+      if plu_number.length == 5
+        plu_number = plu_number[1..-1]
+        item = ProduceByPlu.find_by(plu_number: plu_number)
+      else
+        item = ProduceByPlu.find_by(plu_number: plu_number)
       end
-      item = ProduceByPlu.find_by(plu_number: @plu_number)
-    else
-      item = ProduceByGs1.find_by(gs1_number: @gs1_number).produce_by_plu
-    end
-    item
+      item
   end
 
   def organic_or_gmo(plu_number, produce_item)
