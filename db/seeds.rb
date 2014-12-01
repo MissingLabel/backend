@@ -9,45 +9,45 @@ parce_plu_excel
 
 # ndb seed ---------------------------------------
 
-# berries = []
+berries = []
 
-# ProduceByPlu.all.each do |produce|
-#   if produce.commodity == "berries"
-#     berries << produce.variety
-#   end
-# end
+ProduceByPlu.all.each do |produce|
+  if produce.commodity == "berries"
+    berries << produce.variety
+  end
+end
 
-# ProduceByPlu.all.each do |food|
-#   new_produce = ProduceNdb.new("http://www.thefruitpages.com/chart#{food.commodity.split(" ")[0]}.shtml")
+ProduceByPlu.all.each do |food|
+  new_produce = ProduceNdb.new("http://www.thefruitpages.com/chart#{food.commodity.split(" ")[0]}.shtml")
 
 
-#   produce = ProduceByPlu.where(commodity: food.commodity)
-#   produce.each do |produce|
-#     produce.update_attributes(ndb_no: new_produce.ndb_no)
-#   end
-# end
+  produce = ProduceByPlu.where(commodity: food.commodity)
+  produce.each do |produce|
+    produce.update_attributes(ndb_no: new_produce.ndb_no)
+  end
+end
 
-# berries.each do |berry|
-#   new_produce = ProduceNdb.new("http://www.thefruitpages.com/chart#{berry.split(" ")[0]}.shtml")
-#    produce = ProduceByPlu.where(variety: berry)
+berries.each do |berry|
+  new_produce = ProduceNdb.new("http://www.thefruitpages.com/chart#{berry.split(" ")[0]}.shtml")
+   produce = ProduceByPlu.where(variety: berry)
 
-#   produce.each do |produce|
-#     produce.update_attributes(ndb_no: new_produce.ndb_no)
-#   end
-# end
+  produce.each do |produce|
+    produce.update_attributes(ndb_no: new_produce.ndb_no)
+  end
+end
 
 # ------------------------------------------------
 
 
 # --- Location --- #
 
-# farm_1 = Location.create!(name: "All Seasons Apple Orchard", address: "14510 Route 176 WoodStock, IL")
+farm_1 = Location.create!(name: "All Seasons Apple Orchard", address: "14510 Route 176 WoodStock, IL")
 
 # --- ProduceByGs1 -- #
 
-# honeycrisp = ProduceByPlu.find_by(plu_number: "3283")
+honeycrisp = ProduceByPlu.find_by(plu_number: "3283")
 
-# ProduceByGs1.create!(produce_by_plu: honeycrisp, location: farm_1, peticides_chemicals: "true", gs1_number: "0100736264032838" )
+ProduceByGs1.create!(produce_by_plu: honeycrisp, location: farm_1, peticides_chemicals: "true", gs1_number: "0100736264032838" )
 
 # --- User --- #
 
@@ -55,10 +55,10 @@ User.create!(email: "joe@gmail.com", password: "password", zip_code: 12345)
 
 # --- Seeds seasons --- #
 
-# winter_1 = Season.create!(name: "Winter")
-# spring_2 = Season.create!(name: "Spring")
-# summer_3 = Season.create!(name: "Summer")
-# fall_4 = Season.create!(name: "Fall")
+winter_1 = Season.create!(name: "Winter")
+spring_2 = Season.create!(name: "Spring")
+summer_3 = Season.create!(name: "Summer")
+fall_4 = Season.create!(name: "Fall")
 
 # --- Seeds seasons for berries --- #
 
