@@ -20,7 +20,7 @@ class ItemsController < ApplicationController
     @produce_item = nutrition.prettify_api_info
 
     @produce_item = organic_or_gmo(@number, @produce_item)
-
+    print @produce_item
 
     respond_to do |format|
       format.json { render :json => @produce_item }
