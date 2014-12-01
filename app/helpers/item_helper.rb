@@ -25,6 +25,8 @@ module ItemHelper
     else
       @produce_item[:gmo] = "False"
       @produce_item[:oraganic] = "False"
+    end
+    @produce_item
   end
-  @produce_item
+
 end
