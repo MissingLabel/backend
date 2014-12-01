@@ -17,23 +17,23 @@ class SessionsController < ApplicationController
 
         # respond_to do |format|
         #   format.json { render :json => status }
+        # end
         render :json => status 
-        end
 
       else
         status = {:loginSecure => "False"}
 
         # respond_to do |format|
         #   format.json { render :json => status }
+        # end
         render :json => status 
-        end
       end
     else
       status = {:loginSecure => "False"}
       # respond_to do |format|
       #   format.json { render :json => status }
+      # end
       render :json => status 
-      end
     end
   end
 
