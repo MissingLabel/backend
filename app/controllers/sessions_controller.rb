@@ -13,19 +13,19 @@ class SessionsController < ApplicationController
       if @user.authenticate(params[:password])
         session[:current_user_id] = @user.id
 
-        status = {:loginSecure => "True"}
+        status = {:message => "Success"}
 
-        render :json => status 
+        render :json => status, :status => 201
 
       else
-        status = {:loginSecure => "False"}
+        status = {:message => "Password incorrect"}
 
-        render :json => status 
+        render :json => status, :status => 401
       end
     else
-      status = {:loginSecure => "False"}
+      status = {:message => "Email address not found"}
 
-      render :json => status 
+      render :json => status, :status => 404
     end
   end
 

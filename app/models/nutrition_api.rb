@@ -26,48 +26,66 @@ class NutritionApi
     @total_fat = xml_doc.css("#2").first['valueper100g']
     @fat_units = xml_doc.css("#2").first['unit']
     @fat_per = ((@total_fat.to_f/65) * 100).round
+
     @carb = xml_doc.css("#3").first['valueper100g']
     @carb_per = ((@carb.to_f/325) * 100).round
     @carb_unit = xml_doc.css("#3").first['unit']
+
     @sodium = xml_doc.css("#26").first['valueper100g']
     @sodium_per = ((@sodium.to_f/2400) * 100).round
     @sudium_units = xml_doc.css("#26").first['unit']
+
     @fiber = xml_doc.css("#20").first['valueper100g']
     @fiber_per = ((@fiber.to_f/26) * 100).round
     @fiber_units = xml_doc.css("#20").first['unit']
+
     @sugars = xml_doc.css("#18").first['valueper100g']
     @sugars_unit = xml_doc.css("#18").first['unit']
+
     @protein_num = xml_doc.css("#1").first['valueper100g']
     @protein_per = ((@protein_num.to_f/175) * 100).round
+
     @protein_units = xml_doc.css("#1").first['unit']
     @calcium_num = xml_doc.css("#21").first['valueper100g']
     @calcium_units = xml_doc.css("#21").first['unit']
     @calcium_per = ((@calcium_num.to_f/1000) * 100).round
     @calcium_name = "Calcium"
+
     @iron_num = xml_doc.css("#22").first['valueper100g']
     @iron_units = xml_doc.css("#22").first['unit']
     @iron_per = ((@iron_num.to_f/18) * 100).round
     @iron_name = "Iron"
+
     @magnesium_num = xml_doc.css("#23").first['valueper100g']
     @magnesium_units = xml_doc.css("#23").first['unit']
     @magnesium_per = ((@magnesium_num.to_f/400) * 100).round
     @magnesium_name = "Magnesium"
+
+
+    @magnesium = Nutrient.from_usda_node(...,
+                                         DV.fetch('magnesium', 100)
+                                         DV['magnesium']
+
     @potassium_num = xml_doc.css("#25").first['valueper100g']
     @potassium_units = xml_doc.css("#25").first['unit']
     @potassium_per = ((@potassium_num.to_f/3500) * 100).round
     @potassium_name = "Potassium"
+
     @zinc_num = xml_doc.css("#27").first['valueper100g']
     @zinc_units = xml_doc.css("#27").first['unit']
     @zinc_per = ((@zinc_num.to_f/15) * 100).round
     @zinc_name = "Zinc"
+
     @niacin_num = xml_doc.css("#55").first['valueper100g']
     @niacin_units = xml_doc.css("#55").first['unit']
     @niacin_per = ((@niacin_num.to_f/20) * 100).round
     @niacin_name = "Niacin"
+
     @b6_num = xml_doc.css("#57").first['valueper100g']
     @b6_units = xml_doc.css("#57").first['unit']
     @b6_per = ((@b6_num.to_f/2) * 100).round
     @b6_name = "Vitamin B-6"
+
     @a_num = xml_doc.css("#32").first['valueper100g']
     @a_units = xml_doc.css("#32").first['unit']
     @a_per = ((@a_num.to_f/5000) * 100).round
@@ -97,7 +115,9 @@ class NutritionApi
               :protein => @protein_num,
               :protein_per => @protein_per,
               :protein_units => @protein_units,
-              :lower_label => [{:units => @calcium_units, :name => 'Calcium', :num => @calcium_num, :per => @calcium_per},
+              :lower_label => [@calcium.to_hash,
+                               @iron.to_hash,
+
                                {:units => @iron_units, :name => 'Iron', :num => @iron_num, :per => @iron_per},
                                {:units => @magnesium_units, :name => @magnesium_name, :num => @magnesium_num, :per => @magnesium_per},
                                {:units => @potassium_units, :name => @potassium_name, :num => @potassium_num, :per => @potassium_per},

@@ -2,7 +2,7 @@ class ItemsController < ApplicationController
 
   protect_from_forgery except: :json_object
 
-  def json_object
+  def show
     print params
     @number = params[:number]
 
@@ -16,7 +16,9 @@ class ItemsController < ApplicationController
     end
 
     if @item == nil
-      @produce_item = "Invalid input "
+      render :json => {error: "Unable to find the plu #{params[:id]}"},
+                      :status => 404
+
     else
       nutrition = NutritionApi.new(@item.ndb_no)
       @produce_item = nutrition.prettify_api_info
@@ -26,9 +28,10 @@ class ItemsController < ApplicationController
       @produce_item[:plu_no] = @plu_number
       @produce_item[:variety] = @item.variety
       @produce_item[:farm_geo_location] = farm_geo_api(@gs1_number.location.address) if @gs1_number
+
+      render :json => @produce_item
     end
 
-    render :json => @produce_item
   end
 
 end
