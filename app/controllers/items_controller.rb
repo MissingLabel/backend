@@ -11,6 +11,7 @@ class ItemsController < ApplicationController
       @item = plu_item(@plu_number)
     else
       @gs1_number = params[:number]
+      @gs1_number = @gs1_number.to_s
       @item = ProduceByGs1.find_by(gs1_number: @gs1_number).produce_by_plu
     end
 
