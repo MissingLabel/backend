@@ -1,3 +1,3 @@
 class Location < ActiveRecord::Base
-  belongs_to :produce_by_gs1
+  has_many :produce_by_gs1
 end
