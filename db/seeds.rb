@@ -54,26 +54,26 @@ apples_farm = Location.create!(name: "All Seasons Apple Orchard", address: "1451
 
 # --- ProduceByGs1 -- #
 
-eggplants = ProduceByPlu.find_by(plu_number: "4599")
-avocados = ProduceByPlu.find_by(plu_number: "4225")
-pomegarantes = ProduceByPlu.find_by(plu_number: "3440")
-oranges = ProduceByPlu.find_by(plu_number: "3107")
-cantaloupes = ProduceByPlu.find_by(plu_number: "4050")
-pears = ProduceByPlu.find_by(plu_number: "4409")
-peppers = ProduceByPlu.find_by(plu_number: "4688")
-tomatoes = ProduceByPlu.find_by(plu_number: "4664")
-honeycrisp = ProduceByPlu.find_by(plu_number: "3283")
+eggplants = ProduceByPlu.find_by(plu_number: 4599)
+avocados = ProduceByPlu.find_by(plu_number: 4225)
+pomegarantes = ProduceByPlu.find_by(plu_number: 3440)
+oranges = ProduceByPlu.find_by(plu_number: 3107)
+cantaloupes = ProduceByPlu.find_by(plu_number: 4050)
+pears = ProduceByPlu.find_by(plu_number: 4409)
+peppers = ProduceByPlu.find_by(plu_number: 4688)
+tomatoes = ProduceByPlu.find_by(plu_number: 4664)
+honeycrisp = ProduceByPlu.find_by(plu_number: 3283)
 
 
-eggplants = ProduceByGs1.create!(produce_by_plu: eggplants, location: eggplants_farm, pesticides_chemicals: "true", gs1_number: "0100856122001872")
-avocados = ProduceByGs1.create!(produce_by_plu: avocados, location: avocados_farm, pesticides_chemicals: "true" , gs1_number: "0107500326086922")
-pomegarantes = ProduceByGs1.create!(produce_by_plu: pomegarantes, location: pomegarantes_farm, pesticides_chemicals: "", gs1_number: "0100824150049982")
-oranges = ProduceByGs1.create!(produce_by_plu: oranges, location: oranges_farm, pesticides_chemicals: "false", gs1_number: "0100605049931072")
-cantaloupes = ProduceByGs1.create!(produce_by_plu: cantaloupes, location: cantaloupes_farm, pesticides_chemicals:"false", gs1_number: "0100857537003505")
-pears = ProduceByGs1.create!(produce_by_plu: pears, location: pears_farm, pesticides_chemicals:"true", gs1_number: "0100741839944096")
-peppers = ProduceByGs1.create!(produce_by_plu: peppers, location: peppers_farm, pesticides_chemicals: "false", gs1_number: "0100856122001414")
-tomatoes = ProduceByGs1.create!(produce_by_plu: tomatoes, location: tomatoes_farm, pesticides_chemicals:"false", gs1_number: "0107503006984006")
-apples = ProduceByGs1.create!(produce_by_plu: honeycrisp, location: apples_farm, pesticides_chemicals: "true", gs1_number: "0100736264032838")
+eggplants = ProduceByGs1.create!(produce_by_plu: eggplants, location: eggplants_farm, pesticides_chemicals: "true", gs1_number: "00856122001872")
+avocados = ProduceByGs1.create!(produce_by_plu: avocados, location: avocados_farm, pesticides_chemicals: "true" , gs1_number: "07500326086922")
+pomegarantes = ProduceByGs1.create!(produce_by_plu: pomegarantes, location: pomegarantes_farm, pesticides_chemicals: "", gs1_number: "00824150049982")
+oranges = ProduceByGs1.create!(produce_by_plu: oranges, location: oranges_farm, pesticides_chemicals: "false", gs1_number: "00605049931072")
+cantaloupes = ProduceByGs1.create!(produce_by_plu: cantaloupes, location: cantaloupes_farm, pesticides_chemicals:"false", gs1_number: "00857537003505")
+pears = ProduceByGs1.create!(produce_by_plu: pears, location: pears_farm, pesticides_chemicals:"true", gs1_number: "00741839944096")
+peppers = ProduceByGs1.create!(produce_by_plu: peppers, location: peppers_farm, pesticides_chemicals: "false", gs1_number: "00856122001414")
+tomatoes = ProduceByGs1.create!(produce_by_plu: tomatoes, location: tomatoes_farm, pesticides_chemicals:"false", gs1_number: "07503006984006")
+apples = ProduceByGs1.create!(produce_by_plu: honeycrisp, location: apples_farm, pesticides_chemicals: "true", gs1_number: "00736264032838")
 
 # --- User --- #
 
