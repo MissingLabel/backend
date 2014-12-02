@@ -14,14 +14,14 @@ class ItemsController < ApplicationController
       @item = ProduceByGs1.find_by(gs1_number: @gs1_number).produce_by_plu
     end
 
-
     nutrition = NutritionApi.new(@item.ndb_no)
     @produce_item = nutrition.prettify_api_info
 
     @produce_item = organic_or_gmo(@number, @produce_item)
+
     @produce_item[:plu_no] = @plu_number
     @produce_item[:variety] = @item.variety
-
+    @produce_item[:farm_geo_location] = farm_geo_api(@gs1_number.location.address)
 
     render :json => @produce_item
   end

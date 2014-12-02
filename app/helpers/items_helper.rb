@@ -25,4 +25,9 @@ module ItemsHelper
     end
     @produce_item
   end
+
+  def farm_geo_api(farm_address)
+    farm_address.split(" ").join("+")
+  end
+
 end
