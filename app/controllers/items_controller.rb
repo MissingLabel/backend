@@ -19,7 +19,8 @@ class ItemsController < ApplicationController
     @produce_item = nutrition.prettify_api_info
 
     @produce_item = organic_or_gmo(@number, @produce_item)
-    @produce_item[:plu_number] = @plu_number
+    @produce_item[:plu_no] = @plu_number
+    @produce_item[:variety] = @produce.variety
 
 
     render :json => @produce_item

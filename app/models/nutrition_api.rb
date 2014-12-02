@@ -22,7 +22,6 @@ class NutritionApi
   def nokogiri_api_request
     xml_doc  = Nokogiri::XML(call_usda_api)
     @name = @produce.commodity
-    @variety = @produce.variety
     @calories = xml_doc.css("#5").first['valueper100g']
     @total_fat = xml_doc.css("#2").first['valueper100g']
     @fat_units = xml_doc.css("#2").first['unit']
