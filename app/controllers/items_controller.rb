@@ -20,7 +20,7 @@ class ItemsController < ApplicationController
 
     @produce_item = organic_or_gmo(@number, @produce_item)
     @produce_item[:plu_no] = @plu_number
-    @produce_item[:variety] = @produce.variety
+    @produce_item[:variety] = @item.variety
 
 
     render :json => @produce_item
