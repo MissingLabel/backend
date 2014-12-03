@@ -34,7 +34,7 @@ class ItemsController < ApplicationController
       @produce_item = organic_or_gmo(@number, @produce_item) if @plu_number
 
       @produce_item[:plu_no] = @plu_number if @plu_number
-      @produce_item[:plu_no] = @item.plu_number if @gs1_number 
+      @produce_item[:plu_no] = @item.produce_by_plu.plu_number if @gs1_number 
       @produce_item[:variety] = @item.variety if @item.variety
       puts "-------------"
       p @item
