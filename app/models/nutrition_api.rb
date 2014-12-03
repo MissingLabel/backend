@@ -2,15 +2,20 @@ require 'net/http'
 require 'nokogiri'
 
 class NutritionApi
-  attr_reader :calories
+  attr_reader :calories, :api_url
+  attr_accessor :produce
 
   def initialize(ndb_no)
     @ndb_no = ndb_no
     @produce = ProduceByPlu.find_by(ndb_no: ndb_no)
   end
 
+  def make_api_url
+      api_url = "http://api.data.gov/usda/ndb/reports/?ndbno=#{@ndb_no}&type=f&format=xml&api_key=T7Or56nDBNq3C6VdIJC47Sz1qxprwdyByquFaV4A"
+  end
+
   def call_usda_api
-    url = URI.parse("http://api.data.gov/usda/ndb/reports/?ndbno=#{@ndb_no}&type=f&format=xml&api_key=T7Or56nDBNq3C6VdIJC47Sz1qxprwdyByquFaV4A")
+    url = URI.parse(make_api_url)
     req = Net::HTTP::Get.new(url.to_s)
     res = Net::HTTP.start(url.host, url.port) {|http|
       http.request(req)
@@ -69,8 +74,8 @@ class NutritionApi
     @b6_name = "Vitamin B-6"
     @a_num = xml_doc.css("#32").first['valueper100g']
     @a_units = xml_doc.css("#32").first['unit']
-    @a_per = ((@a_num.to_f/5000) * 100).round
     @a_name = "Vitamin A"
+    @a_per = ((@a_num.to_f/5000) * 100).round
   end
 
   def prettify_api_info
@@ -105,9 +110,6 @@ class NutritionApi
                                {:units => @niacin_units, :name => @niacin_name, :num => @niacin_num, :per => @niacin_per},
                                {:units => @b6_units, :name => 'Vitamin B-6', :num => @b6_num, :per => @b6_per}],
               :seasons => @produce.seasons.uniq.join(", "),
-              :chemicals => true,
-              :farm_name => 'All Seasons Apple Orchard',
-              :farm_address => '14510 Route 176, Woodstock, IL',
               :plu_no => @produce.plu_number,
               :how_pick => @produce.how_to_select,
               :how_store => @produce.how_to_store}

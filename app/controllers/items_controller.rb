@@ -29,6 +29,9 @@ class ItemsController < ApplicationController
         @produce_item = nutrition.prettify_api_info
         @produce_item[:plu_no] = @item.produce_by_plu.plu_number
         @produce_item[:variety] = @item.produce_by_plu.variety if @item.produce_by_plu.variety
+        @produce_item[:farm_address] = @item.location.address
+        @produce_item[:farm_name] = @item.location.name
+        @produce_item[:chemicals] = "True"
         @produce_item[:farm_geo_location] = farm_geo_api(@item.location.address)
       end
     end
