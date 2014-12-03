@@ -34,12 +34,13 @@ class ItemsController < ApplicationController
       @produce_item = organic_or_gmo(@number, @produce_item) if @plu_number
 
       @produce_item[:plu_no] = @plu_number if @plu_number
-      @produce_item[:plu_no] = @item.produce_by_plu.plu_number if @gs1_number 
-      @produce_item[:variety] = @item.variety if @item.variety
-      puts "-------------"
-      p @item
-      puts "-------------"
-      @produce_item[:farm_geo_location] = farm_geo_api(@item.location.address) if @gs1_number
+      @produce_item[:plu_no] = @item.produce_by_plu.plu_number if @gs1_number
+      if @gs1_number 
+        @produce_item[:variety] = @item.produce_by_plu.variety if @item.produce_by_plu.variety
+        @produce_item[:farm_geo_location] = farm_geo_api(@item.location.address)
+      else
+        @produce_item[:variety] = @item.variety if @item.variety
+      end
     end
 
     render :json => @produce_item
