@@ -19,7 +19,7 @@ class ItemsController < ApplicationController
       puts "GS1 conditional"
       @gs1_number = params[:number]
       @gs1_number = @gs1_number.to_s
-      @item = ProduceByGs1.find_by(gs1_number: @gs1_number).produce_by_plu
+      @item = ProduceByGs1.find_by(gs1_number: @gs1_number)
     end
 
     if @item == nil
