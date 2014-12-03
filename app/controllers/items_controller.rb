@@ -4,8 +4,9 @@ class ItemsController < ApplicationController
 
   def json_object
     print params
+    print params[:number]
     @number = params[:number]
-    print @number
+    
     if @number.length < 6
       @plu_number = params[:number]
       @item = plu_item(@plu_number)
