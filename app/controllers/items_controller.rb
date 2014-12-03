@@ -12,6 +12,7 @@ class ItemsController < ApplicationController
       @gs1_number = params[:number]
       @gs1_number = @gs1_number.to_s
       @item = ProduceByGs1.find_by(gs1_number: @gs1_number)
+      @number = @item.produce_by_plu.plu_number
     end
 
     if @item == nil
@@ -33,6 +34,7 @@ class ItemsController < ApplicationController
         @produce_item[:farm_name] = @item.location.name
         @produce_item[:chemicals] = "True"
         @produce_item[:farm_geo_location] = farm_geo_api(@item.location.address)
+        @produce_item = organic_or_gmo(@number, @produce_item)
       end
     end
     render :json => @produce_item
