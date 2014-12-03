@@ -23,12 +23,12 @@ class ItemsController < ApplicationController
         @produce_item = nutrition.prettify_api_info
         @produce_item = organic_or_gmo(@number, @produce_item)
         @produce_item[:plu_no] = @plu_number
-        @produce_item[:variety] = @item.variety
+        @produce_item[:variety] = @item.variety if @item.variety
       else
         nutrition = NutritionApi.new(@item.produce_by_plu.ndb_no)
         @produce_item = nutrition.prettify_api_info
         @produce_item[:plu_no] = @item.produce_by_plu.plu_number
-        @produce_item[:variety] = @item.produce_by_plu.variety
+        @produce_item[:variety] = @item.produce_by_plu.variety if @item.produce_by_plu.variety
         @produce_item[:farm_geo_location] = farm_geo_api(@item.location.address)
       end
     end
