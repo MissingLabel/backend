@@ -3,12 +3,13 @@ class ItemsController < ApplicationController
   protect_from_forgery except: :json_object
 
   def json_object
-    print params
+    p params
     puts "-------------"
-    print params[:number]
+    p params[:number]
     @number = params[:number]
     puts "-------------"
-    print @number.length
+    puts @number.length
+    puts "-------------"
 
     if @number.length < 6
       @plu_number = params[:number]
