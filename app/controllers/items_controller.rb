@@ -12,7 +12,7 @@ class ItemsController < ApplicationController
       @gs1_number = params[:number]
       @gs1_number = @gs1_number.to_s
       @item = ProduceByGs1.find_by(gs1_number: @gs1_number)
-      @number = @item.produce_by_plu.plu_number
+      @number = @item.produce_by_plu.plu_number.to_s
     end
 
     if @item == nil
