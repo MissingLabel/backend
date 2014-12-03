@@ -3,10 +3,10 @@ class ItemsController < ApplicationController
   protect_from_forgery except: :json_object
 
   def json_object
-    p params
+    # p params
     @number = params[:number]
 
-    puts @number.length
+    # puts @number.length
 
     if @number.length < 6
       @plu_number = params[:number]
@@ -20,22 +20,40 @@ class ItemsController < ApplicationController
     if @item == nil
       @produce_item = {error: "Invalid input."}
     else
-      nutrition = NutritionApi.new(@item.ndb_no) if @plu_number
-      nutrition = NutritionApi.new(@item.produce_by_plu.ndb_no) if @gs1_number
-      
-      @produce_item = nutrition.prettify_api_info
+      # nutrition = NutritionApi.new(@item.ndb_no) if @plu_number
+      # nutrition = NutritionApi.new(@item.produce_by_plu.ndb_no) if @gs1_number
 
-      @produce_item = organic_or_gmo(@number, @produce_item) if @plu_number
+      # @produce_item = nutrition.prettify_api_info
 
-      @produce_item[:plu_no] = @plu_number if @plu_number
-      @produce_item[:plu_no] = @item.produce_by_plu.plu_number if @gs1_number
-      
-      if @gs1_number 
-        @produce_item[:variety] = @item.produce_by_plu.variety if @item.produce_by_plu.variety
-        @produce_item[:farm_geo_location] = farm_geo_api(@item.location.address)
+      # @produce_item = organic_or_gmo(@number, @produce_item) if @plu_number
+
+      # @produce_item[:plu_no] = @plu_number if @plu_number
+      # @produce_item[:plu_no] = @item.produce_by_plu.plu_number if @gs1_number
+
+      # if @gs1_number
+      #   @produce_item[:variety] = @item.produce_by_plu.variety if @item.produce_by_plu.variety
+      #   @produce_item[:farm_geo_location] = farm_geo_api(@item.location.address)
+      # else
+      #   @produce_item[:variety] = @item.variety if @item.variety
+      # end
+
+      if @plu_number
+        nutrition = NutritionApi.new(@item.ndb_no)
+        @produce_item = nutrition.prettify_api_info
+        @produce_item = organic_or_gmo(@number, @produce_item)
+        @produce_item[:plu_no] = @plu_number
+        @produce_item[:variety] = @item.variety
       else
-        @produce_item[:variety] = @item.variety if @item.variety
+        nutrition = NutritionApi.new(@item.produce_by_plu.ndb_no)
+        @produce_item = nutrition.prettify_api_info
+        @produce_item[:plu_no] = @item.produce_by_plu.plu_number
+        @produce_item[:variety] = @item.produce_by_plu.variety
+        @produce_item[:farm_geo_location] = farm_geo_api(@item.location.address)
       end
+
+
+
+
     end
 
     render :json => @produce_item
