@@ -25,7 +25,8 @@ class ItemsController < ApplicationController
     if @item == nil
       @produce_item = "Invalid input "
     else
-      nutrition = NutritionApi.new(@item.ndb_no)
+      nutrition = NutritionApi.new(@item.ndb_no) if @plu_number
+      nutrition = NutritionApi.new(@item.produce_by_plu.ndb_no) if @gs1_number
       @produce_item = nutrition.prettify_api_info
       puts "-------------"
       p @produce_item
