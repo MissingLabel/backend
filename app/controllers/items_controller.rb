@@ -27,7 +27,7 @@ class ItemsController < ApplicationController
       @produce_item[:plu_no] = @plu_number if @plu_number
       @produce_item[:plu_no] = @item.plu_number if @gs1_number 
       @produce_item[:variety] = @item.variety if @item.variety
-      @produce_item[:farm_geo_location] = farm_geo_api(@gs1_number.location.address) if @gs1_number
+      @produce_item[:farm_geo_location] = farm_geo_api(@item.location.address) if @gs1_number
     end
 
     render :json => @produce_item
