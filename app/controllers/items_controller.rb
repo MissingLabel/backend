@@ -12,9 +12,11 @@ class ItemsController < ApplicationController
     puts "-------------"
 
     if @number.length < 6
+      puts "Plu conditional"
       @plu_number = params[:number]
       @item = plu_item(@plu_number)
     else
+      puts "GS1 conditional"
       @gs1_number = params[:number]
       @gs1_number = @gs1_number.to_s
       @item = ProduceByGs1.find_by(gs1_number: @gs1_number).produce_by_plu
@@ -25,7 +27,9 @@ class ItemsController < ApplicationController
     else
       nutrition = NutritionApi.new(@item.ndb_no)
       @produce_item = nutrition.prettify_api_info
-
+      puts "-------------"
+      p @produce_item
+      puts "-------------"
       @produce_item = organic_or_gmo(@number, @produce_item) if @plu_number
 
       @produce_item[:plu_no] = @plu_number if @plu_number
