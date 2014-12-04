@@ -23,6 +23,14 @@ class NutritionApi
     res.body
   end
 
+  def display_seasons
+    seasons = []
+    @produce.seasons.each do |season|
+      seasons << season.name
+    end
+    seasons.uniq.join(", ")
+  end
+
   def nokogiri_api_request
     xml_doc  = Nokogiri::XML(call_usda_api)
     @name = @produce.commodity
@@ -109,7 +117,7 @@ class NutritionApi
                                {:units => @zinc_units, :name => @zinc_name, :num => @zinc_num, :per => @zinc_per},
                                {:units => @niacin_units, :name => @niacin_name, :num => @niacin_num, :per => @niacin_per},
                                {:units => @b6_units, :name => 'Vitamin B-6', :num => @b6_num, :per => @b6_per}],
-              :seasons => @produce.seasons.uniq.join(", "),
+              :seasons => display_seasons,
               :plu_no => @produce.plu_number,
               :how_pick => @produce.how_to_select,
               :how_store => @produce.how_to_store}
