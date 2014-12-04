@@ -2,7 +2,7 @@ Missing Label - Backend
 ===========
 
 App:
-[Heroku App](https://missinglavbel.herokuapp.com/)
+[Heroku App](https://missinglabel.herokuapp.com/)
 
 Under the Hood
 ===========
