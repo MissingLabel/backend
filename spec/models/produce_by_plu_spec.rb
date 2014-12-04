@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe ProduceByPlu do
-  let(:apples) {ProduceByPlu.create!(plu_number: 3283, 
+  let(:apples) {ProduceByPlu.new(plu_number: 3283, 
                                     ndb_no: "09003", 
                                     commodity: "apples", 
                                     variety: "honeycrisp", 
