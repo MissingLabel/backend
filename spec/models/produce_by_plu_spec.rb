@@ -17,8 +17,8 @@ describe ProduceByPlu do
     end
 
     pending 'should have a valid ndb number' do
-      apples.save
-      expect(apple.ndb_no).to eq("09003")
+      # apples.save
+      # expect(apple.ndb_no).to eq("09003")
     end
 
     it 'should have valid commodity' do

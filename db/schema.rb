@@ -11,13 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141130205604) do
+ActiveRecord::Schema.define(version: 20141130020945) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "locations", force: true do |t|
-    t.integer  "produce_by_gs1_id"
     t.string   "name"
     t.string   "address"
     t.datetime "created_at"
@@ -25,16 +24,17 @@ ActiveRecord::Schema.define(version: 20141130205604) do
   end
 
   create_table "produce_by_gs1s", force: true do |t|
-    t.integer  "produce_by_plu_id"
+    t.string   "gs1_number"
     t.text     "pesticides_chemicals"
+    t.integer  "produce_by_plu_id"
+    t.integer  "location_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "location"
-    t.string   "gs1_number"
   end
 
   create_table "produce_by_plus", force: true do |t|
     t.integer  "plu_number"
+    t.string   "ndb_no"
     t.string   "commodity"
     t.string   "variety"
     t.string   "size"
@@ -42,7 +42,6 @@ ActiveRecord::Schema.define(version: 20141130205604) do
     t.text     "how_to_select"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "ndb_no"
   end
 
   create_table "seasonal_fruits", force: true do |t|

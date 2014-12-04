@@ -1,6 +1,6 @@
-require_relative "plu_parcer"
-require_relative "nokogiri_produce_info_parser"
-require_relative "nokogiri_seasons_parser"
+require_relative "../app/models/plu_parcer"
+require_relative "../app/models/nokogiri_produce_info_parser"
+require_relative "../app/models/nokogiri_seasons_parser"
 # require 'debugger'
 
 # --- Seeds ProduceByPlu with commodity, variet, size --- #
