@@ -1,18 +1,12 @@
 <% @all_produce.each do |produce| %>
-  <% if produce.commodity == "oranges" #|| produce.seasons != []  %>
-    <p><strong>Commodity:</strong> <%=produce.commodity%> <strong>Variety:</strong> <%=produce.variety%> <strong>PLU#:</strong> <%=produce.plu_number%> <strong>NDB#:</strong> <%=produce.ndb_no%></p>
+    <p><strong>Commodity:</strong> <%=produce.commodity%><strong>Variety:</strong> <%=produce.variety%>
       <ul>
-        <li>How to select: <%= produce.how_to_select%></li>
-        <li>How to store: <%= produce.how_to_store%></li>
-          Seasons:
-        <% produce.seasons.each do |season|%>
-        <li><%=season.name%></li>
+        <li><strong>PLU#:</strong> <%=produce.plu_number%></li>
+        <li><strong>NDB#:</strong> <%=produce.ndb_no%></li>
+        <li><strong>How to select:</strong> <%= produce.how_to_select%></li>
+        <li><strong>How to store:</strong> <%= produce.how_to_store%></li>
+        <li><strong>Seasons:</strong><% produce.seasons.each do |season|%><%=season.name%></li>
         <%end%>
       </ul>
     <%end%>
-  <%end%>
 
-
-
-
-<!-- [(produce.commodity.length) -1] -->

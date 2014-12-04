@@ -1,43 +1,20 @@
 Missing Label - Backend
 ===========
 
-Heroku:
-[Heroku App](https://vast-cliffs-6881.herokuapp.com/)
-
-Project Description
-===========
-
-
+App:
+[Heroku App](https://missinglavbel.herokuapp.com/)
 
 Under the Hood
 ===========
 
 
-
 ![schema](app/assets/images/missing_label_schema.png)
 
-Using the Web App
+
+Rails API
 ===========
 
+Our current Rails API obtains nutrition data from the USDA. The farm locations are represented as a response from the Google maps API. Additional food data has been mocked to represent expected available data from GS1 in 2015. We have contacted representatives from GS1 to ensure the format of this expected information in order to create an app that would accomodate a simple transition to live data.
 
 
-Installation
-===========
-
-
-
-
-Contributors
-===========
-
-Shreya Patel: [@shreya317](https://github.com/shreya317)
-
-Michael Karouzos: [@multiviouskalogram](https://github.com/multiviouskalogram)
-
-John Williams: [@john335](https://github.com/johnw335)
-
-Gale Van Rossem: [@GaleFroceVR](https://github.com/GaleForceVR)
-
-Trello Board:
-[Trello Board](https://trello.com/b/6TTmZd4R/missing-label)
-
+[Frontend repo](https://github.com/MissingLabel/missingapp)
