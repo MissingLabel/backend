@@ -13,3 +13,25 @@
  *= require_tree .
  *= require_self
  */
+
+html {
+  font-family: 'Open Sans', sans-serif;
+  color: orange;
+  background-color: white;
+}
+
+
+ /*#768002*/
+#container {
+  text-align: center;
+  background-color: #484e01;
+  margin-left: auto;	
+  margin-right: auto;
+  margin-top: 40px;
+  margin-bottom: 30px;
+  /*max-width: 60%;*/
+  /*max-height: 100%;*/
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border: 4px #C2D301 solid;
+}
